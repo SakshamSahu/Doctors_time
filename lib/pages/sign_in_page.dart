@@ -1,3 +1,4 @@
+import 'package:doctors_time/pages/home_page.dart';
 import 'package:doctors_time/pages/sign_up_page.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:flutter/gestures.dart';
@@ -74,10 +75,17 @@ class SigninPage extends StatelessWidget {
               ),
               SizedBox(height: height * 0.035),
               Center(
-                  child: SizedBox(
-                      width: width,
-                      height: height * 0.06,
-                      child: CustomButton(text: "Sign In", onPressed: () {}))),
+                child: SizedBox(
+                  width: width,
+                  height: height * 0.06,
+                  child: CustomButton(
+                    text: "Sign In",
+                    onPressed: () {
+                      Navigator.pushNamed(context, HomePage.routeName);
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),

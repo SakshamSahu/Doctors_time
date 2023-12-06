@@ -15,7 +15,7 @@ class GetStartedPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: bgcolor,
+        backgroundColor: bgcolor2,
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(
