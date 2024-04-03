@@ -1,5 +1,5 @@
-import 'package:doctors_time/pages/home_page.dart';
 import 'package:doctors_time/pages/sign_up_page.dart';
+import 'package:doctors_time/widgets/bottom_navigation_bar.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +81,8 @@ class SigninPage extends StatelessWidget {
                   child: CustomButton(
                     text: "Sign In",
                     onPressed: () {
-                      Navigator.pushNamed(context, HomePage.routeName);
+                      Navigator.pushNamed(
+                          context, BottomNavigationExample.routeName);
                     },
                   ),
                 ),

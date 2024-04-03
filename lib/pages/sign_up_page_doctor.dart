@@ -1,38 +1,16 @@
-import 'package:country_picker/country_picker.dart';
-import 'package:doctors_time/pages/otp_page.dart';
 import 'package:doctors_time/pages/sign_in_page.dart';
 import 'package:doctors_time/widgets/button_1.dart';
-import 'package:doctors_time/widgets/custom_textformfield.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
-  static const String routeName = "signup-page";
-
-  @override
-  State<SignupPage> createState() => _SignupPageState();
-}
-
-class _SignupPageState extends State<SignupPage> {
-  Country selectedCountry = Country(
-    phoneCode: "91",
-    countryCode: "IN",
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: "India",
-    example: "India",
-    displayName: "India",
-    displayNameNoCountryCode: "IN",
-    e164Key: "",
-  );
+class SignupPageDoctor extends StatelessWidget {
+  const SignupPageDoctor({super.key});
+  static const String routeName = "signup-page-doctor";
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final TextEditingController usernameController = TextEditingController();
     return Scaffold(
       // backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -69,40 +47,24 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
                 SizedBox(height: height * 0.04),
-                customTextFormField(context, "Username*", usernameController),
-                SizedBox(height: height * 0.03),
-                customTextFormField(context, "Email*", usernameController),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Username*',
+                  ),
+                ),
                 SizedBox(height: height * 0.03),
                 TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: "Enter phone number",
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                        onTap: () {
-                          showCountryPicker(
-                              context: context,
-                              countryListTheme: const CountryListThemeData(
-                                bottomSheetHeight: 550,
-                              ),
-                              onSelect: (value) {
-                                setState(() {
-                                  selectedCountry = value;
-                                });
-                              });
-                        },
-                        child: Text(
-                          "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode}",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email*',
+                  ),
+                ),
+                SizedBox(height: height * 0.03),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Phone Number*',
                   ),
                 ),
                 SizedBox(height: height * 0.03),
@@ -121,6 +83,38 @@ class _SignupPageState extends State<SignupPage> {
                     labelText: 'Confirm Password*',
                   ),
                 ),
+                SizedBox(height: height * 0.03),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Clinic Name',
+                  ),
+                ),
+                SizedBox(height: height * 0.03),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Hospital Name',
+                  ),
+                ),
+                SizedBox(height: height * 0.03),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Doctors Degree*',
+                  ),
+                ),
+                SizedBox(height: height * 0.03),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Filed of Study*',
+                  ),
+                ),
                 SizedBox(height: height * 0.035),
                 Center(
                   child: SizedBox(
@@ -129,7 +123,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: CustomButton(
                         text: "Sign Up",
                         onPressed: () {
-                          Navigator.pushNamed(context, OtpPage.routeName);
+                          Navigator.pushNamed(context, SigninPage.routeName);
                         }),
                   ),
                 ),

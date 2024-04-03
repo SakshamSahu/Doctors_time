@@ -1,5 +1,5 @@
 import 'package:doctors_time/pages/sign_in_page.dart';
-import 'package:doctors_time/pages/sign_up_page.dart';
+import 'package:doctors_time/pages/sign_up_as.dart';
 import 'package:doctors_time/utils/app_assets.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:doctors_time/constants.dart';
@@ -35,7 +35,7 @@ class GetStartedPage extends StatelessWidget {
                   child: CustomButton(
                     text: "Sign Up",
                     onPressed: () {
-                      Navigator.pushNamed(context, SignupPage.routeName);
+                      Navigator.pushNamed(context, SignUpAs.routeName);
                     },
                   ),
                 ),

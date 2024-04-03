@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "277547125885",
+    "project_id": "doctors-time-a169e",
+    "storage_bucket": "doctors-time-a169e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277547125885:android:c03203185b7da71a593514",
+        "android_client_info": {
+          "package_name": "com.example.doctors_time"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvHbmP3Z9wUMeNQMFy7RNw3NjEY_s6mzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
