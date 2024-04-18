@@ -5,8 +5,10 @@ import 'package:doctors_time/components/recommended_doctor_card.dart';
 import 'package:doctors_time/components/specialities_tile.dart';
 import 'package:doctors_time/constants.dart';
 import 'package:doctors_time/pages/search_specialist.dart';
+import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final ap = Provider.of<myAuthProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: bgcolor2,
@@ -78,7 +81,7 @@ class HomePage extends StatelessWidget {
                     SizedBox(width: width * 0.01),
                     Expanded(
                       child: Text(
-                        "03, Outside Datia Gate, Jhansi, Uttar Pradesh -284002 kojksdjisdjijdajdoakdoakdoakdoakdaodkaodk",
+                        ap.userModel.address,
                         style: TextStyle(fontSize: width * 0.032),
                         overflow: TextOverflow.ellipsis,
                       ),

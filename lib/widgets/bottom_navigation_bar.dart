@@ -1,6 +1,7 @@
 import 'package:doctors_time/pages/appointment_page.dart';
 import 'package:doctors_time/pages/chat_page.dart';
 import 'package:doctors_time/pages/home_page.dart';
+import 'package:doctors_time/pages/important_updates.dart';
 import 'package:doctors_time/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _BottomNavigationExampleState extends State {
     const HomePage(),
     const AppointmentPage(),
     const ChatPage(),
+    const ImportantUpdates(),
     const ProfilePage(),
   ];
 
@@ -58,6 +60,11 @@ class _BottomNavigationExampleState extends State {
                 CupertinoIcons.chat_bubble_text,
               ),
               label: "Chat"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.emergency_share,
+              ),
+              label: "Important"),
           BottomNavigationBarItem(
               icon: Icon(
                 CupertinoIcons.person_solid,

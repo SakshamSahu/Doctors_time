@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doctors_time/pages/sign_in_page.dart';
+import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyDrawer extends StatefulWidget {
   final String name, email;
@@ -14,8 +17,8 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
-    const imageURL =
-        "https://e0.pxfuel.com/wallpapers/900/942/desktop-wallpaper-cartoon-cartoon-new-cartoon-boy-cartoon-letest-cartoon-cute-cartoon-cute-bay-cartoon-kartoon-thumbnail.jpg";
+    final ap = Provider.of<myAuthProvider>(context, listen: false);
+
     return Drawer(
       child: Container(
         color: Colors.black,
@@ -31,7 +34,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 accountName: Text(widget.name),
                 accountEmail: Text(widget.email),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(imageURL),
+                  backgroundImage: NetworkImage(ap.userModel.profilePic),
                 ),
               ),
             ),
@@ -44,7 +47,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "Profile",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -57,7 +59,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "Portfolio",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -69,8 +70,7 @@ class _MyDrawerState extends State<MyDrawer> {
               color: Colors.white,
             ),
             title: Text(
-              "Opportunities",
-              textScaleFactor: 1.2,
+              "Messages",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -82,8 +82,7 @@ class _MyDrawerState extends State<MyDrawer> {
               color: Colors.white,
             ),
             title: Text(
-              "Applications",
-              textScaleFactor: 1.2,
+              "Appointments",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -96,7 +95,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "Skill-Dev",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -109,7 +107,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "News",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -122,7 +119,6 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "Contact Us",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
@@ -134,20 +130,21 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             title: Text(
               "Settings",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              ap.userSignOut().then((value) =>
+                  Navigator.pushNamed(context, SigninPage.routeName));
+            },
             leading: Icon(
               CupertinoIcons.power,
               color: Colors.white,
             ),
             title: Text(
               "Log Out",
-              textScaleFactor: 1.2,
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),

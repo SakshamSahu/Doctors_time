@@ -6,3 +6,5 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 const bgcolor2 = Color(0xFFE3F2FD);
 
 const double defaultPadding = 16.0;
+
+enum Roles { patient, doctor }

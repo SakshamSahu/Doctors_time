@@ -1,13 +1,34 @@
-import 'package:doctors_time/pages/sign_up_page.dart';
-import 'package:doctors_time/widgets/bottom_navigation_bar.dart';
+import 'package:country_picker/country_picker.dart';
+import 'package:doctors_time/pages/sign_up_page_patient.dart';
+import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SigninPage extends StatelessWidget {
+class SigninPage extends StatefulWidget {
   const SigninPage({super.key});
   static const String routeName = "signin-page";
 
+  @override
+  State<SigninPage> createState() => _SigninPageState();
+}
+
+class _SigninPageState extends State<SigninPage> {
+  Country selectedCountry = Country(
+    phoneCode: "91",
+    countryCode: "IN",
+    e164Sc: 0,
+    geographic: true,
+    level: 1,
+    name: "India",
+    example: "India",
+    displayName: "India",
+    displayNameNoCountryCode: "IN",
+    e164Key: "",
+  );
+
+  final TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -27,10 +48,6 @@ class SigninPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
               SizedBox(height: height * 0.015),
-              // const Text(
-              //   "Don't have an account? Sign Up",
-              //   style: TextStyle(fontSize: 15),
-              // ),
               RichText(
                 text: TextSpan(
                   text: "Don't have an account?",
@@ -50,30 +67,42 @@ class SigninPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.035),
               TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email*',
+                controller: phoneController,
+
+                //keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  labelText: "Enter phone number",
+                  prefixIcon: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        showCountryPicker(
+                            context: context,
+                            countryListTheme: const CountryListThemeData(
+                              bottomSheetHeight: 550,
+                            ),
+                            onSelect: (value) {
+                              setState(() {
+                                selectedCountry = value;
+                              });
+                            });
+                      },
+                      child: Text(
+                        "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: height * 0.03),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password*',
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              InkWell(
-                onTap: () {},
-                child: const Text(
-                  "Forgot your password?",
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
-              ),
-              SizedBox(height: height * 0.035),
               Center(
                 child: SizedBox(
                   width: width,
@@ -81,8 +110,7 @@ class SigninPage extends StatelessWidget {
                   child: CustomButton(
                     text: "Sign In",
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context, BottomNavigationExample.routeName);
+                      sendPhoneNumber();
                     },
                   ),
                 ),
@@ -92,5 +120,12 @@ class SigninPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void sendPhoneNumber() {
+    final ap = Provider.of<myAuthProvider>(context, listen: false);
+    String phoneNumber = phoneController.text.trim();
+
+    ap.signInWithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
   }
 }
