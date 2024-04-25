@@ -203,6 +203,29 @@ class myAuthProvider extends ChangeNotifier {
     return downloadUrl;
   }
 
+  Future getUserDataFromSP() async {
+    SharedPreferences s = await SharedPreferences.getInstance();
+    final String? data = s.getString("user_model");
+    print(data);
+    if (data != null) {
+      final snapshot = jsonDecode(data);
+      _userModel = UserModel(
+          firstname: snapshot['firstname'],
+          lastname: snapshot['lastname'],
+          age: snapshot['age'],
+          address: snapshot['address'],
+          city: snapshot['city'],
+          pincode: snapshot['pincode'],
+          email: snapshot['email'],
+          phonenumber: snapshot['phonenumber'],
+          uid: snapshot['uid'],
+          createdAt: snapshot['createdAt'],
+          profilePic: snapshot['profilePic'],
+          role: snapshot['role']);
+      notifyListeners();
+    }
+  }
+
   Future getUserDataFromFirestore() async {
     await _firebaseFirestore
         .collection("users")
@@ -219,8 +242,8 @@ class myAuthProvider extends ChangeNotifier {
           email: snapshot['email'],
           phonenumber: snapshot['phonenumber'],
           uid: snapshot['uid'],
-          createdAt: snapshot['createdat'],
-          profilePic: snapshot['profilepic'],
+          createdAt: snapshot['createdAt'],
+          profilePic: snapshot['profilePic'],
           role: snapshot['role']);
     });
   }

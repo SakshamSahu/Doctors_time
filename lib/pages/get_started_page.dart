@@ -39,7 +39,8 @@ class GetStartedPage extends StatelessWidget {
                     height: height * 0.065,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (ap.isSignedIn == true) {
+                          print(ap.isSignedIn);
+                          if (ap.isSignedIn) {
                             await ap.getRoleFromSP().then((value) {
                               if (value == 'patient') {
                                 Navigator.pushNamed(

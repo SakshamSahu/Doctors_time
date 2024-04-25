@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:doctors_time/constants.dart';
+import 'package:doctors_time/pages/doctor_home_page.dart';
+import 'package:doctors_time/pages/home_page.dart';
 import 'package:doctors_time/pages/sign_up_as.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:doctors_time/widgets/button_1.dart';
@@ -135,8 +138,20 @@ class _OtpPageState extends State<OtpPage> {
           ap.checkExistingUser().then((value) async {
             if (value == true) {
               //user exists in oure app
-              if (ap.getRoleFromDatabse() == 'patient') {
-              } else {}
+              final String role = await ap.getRoleFromDatabse();
+              if (role == 'patient') {
+                await ap.getUserDataFromFirestore();
+                await ap.setSignIn("patient");
+                await ap.saveUserDataToSP(Roles.patient);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, HomePage.routeName, (route) => false);
+              } else {
+                await ap.getDoctorsDataFromFirestore();
+                await ap.setSignIn("doctor");
+                await ap.saveUserDataToSP(Roles.doctor);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, DoctorHomePage.routeName, (route) => false);
+              }
             } else {
               //new user
               Navigator.pushNamed(context, SignUpAs.routeName);
