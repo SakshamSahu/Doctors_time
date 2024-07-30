@@ -28,11 +28,11 @@ class ChatPage extends StatelessWidget {
               children: [
                 ChatTile(context, "Saksham Sahu", "Hola"),
                 SizedBox(height: height * 0.012),
-                ChatTile(context, "Sakshi Sahu", "Dasai"),
+                ChatTile(context, "Sakshi Sahu", "Loem"),
                 SizedBox(height: height * 0.012),
-                ChatTile(context, "Abhinay Prajapati", "Kesan ba"),
+                ChatTile(context, "Abhinay Prajapati", "Hey"),
                 SizedBox(height: height * 0.012),
-                ChatTile(context, "Anurag Puri", "Hurr")
+                ChatTile(context, "Anurag Puri", "Hello")
               ],
             ),
           ),

@@ -10,7 +10,8 @@ Widget specialitiesTile(BuildContext context, String name, String path) {
       height: height * 0.11,
       width: width * 0.26,
       decoration: BoxDecoration(
-          color: Colors.white60, borderRadius: BorderRadius.circular(8)),
+          color: const Color(0XFF0217A8),
+          borderRadius: BorderRadius.circular(8)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,7 +23,10 @@ Widget specialitiesTile(BuildContext context, String name, String path) {
           SizedBox(height: height * 0.01),
           Text(
             name,
-            style: TextStyle(fontSize: width * 0.031),
+            style: TextStyle(
+                fontSize: width * 0.031,
+                color: Colors.white,
+                fontWeight: FontWeight.w500),
             overflow: TextOverflow.ellipsis,
           ),
         ],

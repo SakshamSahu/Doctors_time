@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:doctors_time/components/pick_image.dart';
 import 'package:doctors_time/constants.dart';
 import 'package:doctors_time/models/DoctorsModel.dart';
-import 'package:doctors_time/pages/doctor_home_page.dart';
-import 'package:doctors_time/pages/sign_in_page.dart';
+import 'package:doctors_time/pages/doctor/doctor_home_page.dart';
+import 'package:doctors_time/pages/auth/sign_in_page.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
-import 'package:doctors_time/widgets/bottom_navigation_bar.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:doctors_time/widgets/custom_snackbar.dart';
 import 'package:flutter/gestures.dart';
@@ -25,7 +24,7 @@ class _SignupPageDoctorState extends State<SignupPageDoctor> {
   File? image;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+
   final TextEditingController addressController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -132,14 +131,6 @@ class _SignupPageDoctorState extends State<SignupPageDoctor> {
                 ),
                 SizedBox(height: height * 0.03),
                 TextFormField(
-                  controller: phoneController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Phone Number*',
-                  ),
-                ),
-                SizedBox(height: height * 0.03),
-                TextFormField(
                   controller: genderController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -223,7 +214,7 @@ class _SignupPageDoctorState extends State<SignupPageDoctor> {
       lastname: lastNameController.text.trim(),
       age: ageController.text.trim(),
       email: emailController.text.trim(),
-      phonenumber: phoneController.text.trim(),
+      phonenumber: "",
       uid: "",
       createdAt: "",
       qualificaion: qualificationController.text.trim(),
@@ -235,7 +226,18 @@ class _SignupPageDoctorState extends State<SignupPageDoctor> {
       clinicorhospitalpincode: clinicorhospitalpincodeController.text.trim(),
       specialization: specializationController.text.trim(),
     );
-    if (image != null) {
+    if (firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        genderController.text.isEmpty ||
+        clinicorhospitalnameController.text.isEmpty ||
+        clinicorhospitaladdressController.text.isEmpty ||
+        clinicorhospitalcityController.text.isEmpty ||
+        clinicorhospitalpincodeController.text.isEmpty ||
+        qualificationController.text.isEmpty ||
+        specializationController.text.isEmpty) {
+      customSnackBar(context, "Please fill in all fields");
+    } else if (image != null) {
       ap.saveDoctorsDataToFirebase(
         context: context,
         doctorsModel: doctorsModel,
@@ -244,10 +246,12 @@ class _SignupPageDoctorState extends State<SignupPageDoctor> {
           ap.saveUserDataToSP(Roles.doctor).then(
                 (value) => ap.setSignIn("doctor").then(
                       (value) => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const DoctorHomePage()),
-                          (route) => false),
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DoctorHomePage(),
+                        ),
+                        (route) => false,
+                      ),
                     ),
               );
         },

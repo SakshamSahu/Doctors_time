@@ -10,7 +10,7 @@ Widget appointmentCard(BuildContext context, int index) {
     width: double.infinity,
     height: height * 0.19,
     decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(8)),
+        color: Colors.grey.shade300, borderRadius: BorderRadius.circular(8)),
     child: Row(
       children: [
         Column(

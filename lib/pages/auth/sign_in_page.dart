@@ -1,7 +1,8 @@
 import 'package:country_picker/country_picker.dart';
-import 'package:doctors_time/pages/sign_up_page_patient.dart';
+import 'package:doctors_time/pages/auth/sign_up_page_patient.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:doctors_time/widgets/button_1.dart';
+import 'package:doctors_time/widgets/custom_snackbar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,33 +46,20 @@ class _SigninPageState extends State<SigninPage> {
               SizedBox(height: height * 0.01),
               const Text(
                 "Sign In",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
               ),
               SizedBox(height: height * 0.015),
-              RichText(
-                text: TextSpan(
-                  text: "Don't have an account?",
-                  style: const TextStyle(fontSize: 15, color: Colors.black),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: " Sign Up!",
-                      style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(context, SignupPage.routeName);
-                        },
-                    ),
-                  ],
-                ),
+              const Text(
+                "Enter Phone Number to Get Started",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: height * 0.035),
+              SizedBox(height: height * 0.03),
               TextFormField(
                 controller: phoneController,
-
-                //keyboardType: TextInputType.number,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   labelText: "Enter phone number",
@@ -125,7 +113,12 @@ class _SigninPageState extends State<SigninPage> {
   void sendPhoneNumber() {
     final ap = Provider.of<myAuthProvider>(context, listen: false);
     String phoneNumber = phoneController.text.trim();
-
-    ap.signInWithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
+    if (phoneNumber.isEmpty) {
+      customSnackBar(context, "Phone number cannot be empty");
+    } else if (phoneNumber.length != 10) {
+      customSnackBar(context, "Please enter a valid 10-digit phone number");
+    } else {
+      ap.signInWithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
+    }
   }
 }

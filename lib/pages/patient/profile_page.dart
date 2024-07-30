@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:doctors_time/components/pick_image.dart';
 import 'package:doctors_time/constants.dart';
-import 'package:doctors_time/pages/sign_in_page.dart';
-import 'package:doctors_time/provider/my_auth_provider.dart';
+import 'package:doctors_time/pages/auth/sign_in_page.dart';
+import 'package:doctors_time/provider/patient_provider.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:doctors_time/widgets/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -21,11 +23,17 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? selectedImage;
 
+  //for selecting image
+  void selectImage() async {
+    selectedImage = await pickImage(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final ap = Provider.of<myAuthProvider>(context, listen: false);
+    final ref = Provider.of<PatientProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: bgcolor2,
       body: SafeArea(
@@ -69,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   InkWell(
                     onTap: () {
                       // pickImage();
+                      selectImage();
                     },
                     child: CircularPercentIndicator(
                       radius: 69.0,
@@ -78,25 +87,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       center: CircleAvatar(
                           radius: 60, // Image radius
                           backgroundImage:
-                              NetworkImage(ap.userModel.profilePic)),
-                      progressColor: Colors.blueAccent,
+                              NetworkImage(ref.userModel!.profilePic)),
+                      progressColor: const Color(0XFF0217A8),
                     ),
                   ),
                   SizedBox(height: height * 0.015),
                   Text(
-                    "${ap.userModel.firstname} ${ap.userModel.lastname}",
+                    "${ref.userModel!.firstname} ${ref.userModel!.lastname}",
                     style: TextStyle(
                         fontSize: width * 0.05, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    ap.userModel.email,
+                    ref.userModel!.email,
                     style: TextStyle(
                         fontSize: width * 0.038, fontWeight: FontWeight.w400),
                   ),
                   SizedBox(height: height * 0.025),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(10)),
                     height: height * 0.06,
                     width: double.infinity,
@@ -120,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: height * 0.015),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(10)),
                     height: height * 0.06,
                     width: double.infinity,
@@ -144,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: height * 0.015),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(10)),
                     height: height * 0.06,
                     width: double.infinity,
@@ -168,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: height * 0.015),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(10)),
                     height: height * 0.06,
                     width: double.infinity,
@@ -192,17 +201,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: height * 0.015),
                   CustomButton(
                       text: "Log out",
-                      onPressed: () {
-                        ap.userSignOut().then((value) =>
-                            Navigator.pushNamed(context, SigninPage.routeName));
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, SigninPage.routeName, (route) => false);
                       })
                 ],
               );
             })),
       ),
       drawer: MyDrawer(
-          name: "${ap.userModel.firstname} ${ap.userModel.lastname}",
-          email: ap.userModel.email),
+          name: "${ref.userModel!.firstname} ${ref.userModel!.lastname}",
+          email: ref.userModel!.email),
     );
   }
 }

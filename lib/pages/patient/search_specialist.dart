@@ -1,9 +1,23 @@
 import 'package:doctors_time/constants.dart';
 import 'package:flutter/material.dart';
 
-class SearchSpecialist extends StatelessWidget {
+class SearchSpecialist extends StatefulWidget {
   const SearchSpecialist({super.key});
   static const String routeName = "search-specialist-page";
+
+  @override
+  State<SearchSpecialist> createState() => _SearchSpecialistState();
+}
+
+class _SearchSpecialistState extends State<SearchSpecialist> {
+  final TextEditingController searchSpecialistDateController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchSpecialistDateController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +50,7 @@ class SearchSpecialist extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: height * 0.03),
+              Text("Select Work Order"),
               TextFormField(
                 decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.pin),
@@ -53,6 +68,9 @@ class SearchSpecialist extends StatelessWidget {
               ),
               SizedBox(height: height * 0.03),
               TextFormField(
+                controller: searchSpecialistDateController,
+                onTap: () => _selectDate(),
+                readOnly: true,
                 decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.calendar_month),
                   border: OutlineInputBorder(),
@@ -65,5 +83,16 @@ class SearchSpecialist extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2024),
+        lastDate: DateTime(2025));
+    if (_picked != null) {
+      searchSpecialistDateController.text = _picked.toString().split(" ")[0];
+    }
   }
 }

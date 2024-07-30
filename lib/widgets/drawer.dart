@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:doctors_time/pages/sign_in_page.dart';
+import 'package:doctors_time/pages/auth/sign_in_page.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
+import 'package:doctors_time/provider/patient_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +19,7 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
-    final ap = Provider.of<myAuthProvider>(context, listen: false);
+    final ref = Provider.of<PatientProvider>(context, listen: true);
 
     return Drawer(
       child: Container(
@@ -34,7 +36,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 accountName: Text(widget.name),
                 accountEmail: Text(widget.email),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(ap.userModel.profilePic),
+                  backgroundImage: NetworkImage(ref.userModel!.profilePic),
                 ),
               ),
             ),
@@ -135,9 +137,10 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
           ),
           ListTile(
-            onTap: () {
-              ap.userSignOut().then((value) =>
-                  Navigator.pushNamed(context, SigninPage.routeName));
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, SigninPage.routeName, (route) => false);
             },
             leading: Icon(
               CupertinoIcons.power,

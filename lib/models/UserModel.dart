@@ -15,6 +15,7 @@ class UserModel {
   String createdAt;
   String profilePic;
   String role;
+  String gender;
 
   UserModel({
     required this.firstname,
@@ -29,6 +30,7 @@ class UserModel {
     required this.createdAt,
     required this.profilePic,
     required this.role,
+    required this.gender,
   });
 
   //from map: getting data from the server
@@ -46,6 +48,7 @@ class UserModel {
       createdAt: map['createdAt'] as String,
       profilePic: map['profilePic'] as String,
       role: map['role'] as String,
+      gender: map['gender'] as String,
     );
   }
 
@@ -64,6 +67,7 @@ class UserModel {
       'createdAt': createdAt,
       'profilePic': profilePic,
       'role': role,
+      'gender': gender,
     };
   }
 
@@ -80,6 +84,7 @@ class UserModel {
     String? createdAt,
     String? profilePic,
     String? role,
+    String? gender,
   }) {
     return UserModel(
       firstname: firstname ?? this.firstname,
@@ -94,6 +99,7 @@ class UserModel {
       createdAt: createdAt ?? this.createdAt,
       profilePic: profilePic ?? this.profilePic,
       role: role ?? this.role,
+      gender: gender ?? this.gender,
     );
   }
 
@@ -104,7 +110,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(firstname: $firstname, lastname: $lastname, age: $age, address: $address, city: $city, pincode: $pincode, email: $email, phonenumber: $phonenumber, uid: $uid, createdAt: $createdAt, profilePic: $profilePic, role: $role)';
+    return 'UserModel(firstname: $firstname, lastname: $lastname, age: $age, address: $address, city: $city, pincode: $pincode, email: $email, phonenumber: $phonenumber, uid: $uid, createdAt: $createdAt, profilePic: $profilePic, role: $role, gender: $gender)';
   }
 
   @override
@@ -122,7 +128,8 @@ class UserModel {
         other.uid == uid &&
         other.createdAt == createdAt &&
         other.profilePic == profilePic &&
-        other.role == role;
+        other.role == role &&
+        other.gender == gender;
   }
 
   @override
@@ -138,6 +145,7 @@ class UserModel {
         uid.hashCode ^
         createdAt.hashCode ^
         profilePic.hashCode ^
-        role.hashCode;
+        role.hashCode ^
+        gender.hashCode;
   }
 }

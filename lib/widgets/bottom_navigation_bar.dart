@@ -1,8 +1,8 @@
-import 'package:doctors_time/pages/appointment_page.dart';
-import 'package:doctors_time/pages/chat_page.dart';
-import 'package:doctors_time/pages/home_page.dart';
-import 'package:doctors_time/pages/important_updates.dart';
-import 'package:doctors_time/pages/profile_page.dart';
+import 'package:doctors_time/pages/patient/appointment_page.dart';
+import 'package:doctors_time/pages/patient/chat_page.dart';
+import 'package:doctors_time/pages/patient/home_page.dart';
+import 'package:doctors_time/pages/patient/important_updates.dart';
+import 'package:doctors_time/pages/patient/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,8 +40,8 @@ class _BottomNavigationExampleState extends State {
         currentIndex: _selectedTab,
         onTap: (index) => _changeTab(index),
         selectedIconTheme:
-            const IconThemeData(color: Colors.blueAccent, size: 35),
-        selectedItemColor: Colors.blue,
+            const IconThemeData(color: Color(0XFF0217A8), size: 35),
+        selectedItemColor: const Color(0XFF0217A8),
         unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(

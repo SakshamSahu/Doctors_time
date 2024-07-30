@@ -7,7 +7,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctors_time/constants.dart';
 import 'package:doctors_time/models/DoctorsModel.dart';
 import 'package:doctors_time/models/UserModel.dart';
-import 'package:doctors_time/pages/otp_page.dart';
+import 'package:doctors_time/pages/doctor/doctor_home_page.dart';
+import 'package:doctors_time/pages/auth/otp_page.dart';
+import 'package:doctors_time/pages/auth/sign_up_as.dart';
+import 'package:doctors_time/services/firestore_service.dart';
+import 'package:doctors_time/widgets/bottom_navigation_bar.dart';
 import 'package:doctors_time/widgets/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -86,7 +90,6 @@ class myAuthProvider extends ChangeNotifier {
   void verifyOtp({
     required BuildContext context,
     required String verificationId,
-    required Function onSucess,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -99,7 +102,19 @@ class myAuthProvider extends ChangeNotifier {
       User? user = (await _firebaseAuth.signInWithCredential(cred)).user!;
       if (user != null) {
         _uid = user.uid;
-        onSucess();
+        final bool isOldUSer = await FirestoreService().checkUserExists(_uid!);
+        if (isOldUSer) {
+          String role = await FirestoreService().getRoleFromFirebase(_uid!);
+          if (role == "doctor") {
+            Navigator.pushNamedAndRemoveUntil(
+                context, DoctorHomePage.routeName, (route) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, BottomNavigationExample.routeName, (route) => false);
+          }
+        } else {
+          Navigator.pushNamed(context, SignUpAs.routeName);
+        }
       }
       _isLoading = false;
       notifyListeners();
@@ -210,6 +225,7 @@ class myAuthProvider extends ChangeNotifier {
     if (data != null) {
       final snapshot = jsonDecode(data);
       _userModel = UserModel(
+          gender: snapshot['gender'],
           firstname: snapshot['firstname'],
           lastname: snapshot['lastname'],
           age: snapshot['age'],
@@ -233,6 +249,7 @@ class myAuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _userModel = UserModel(
+          gender: snapshot['gender'],
           firstname: snapshot['firstname'],
           lastname: snapshot['lastname'],
           age: snapshot['age'],

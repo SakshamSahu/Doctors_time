@@ -1,9 +1,5 @@
 import 'dart:developer';
 
-import 'package:doctors_time/constants.dart';
-import 'package:doctors_time/pages/doctor_home_page.dart';
-import 'package:doctors_time/pages/home_page.dart';
-import 'package:doctors_time/pages/sign_up_as.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:doctors_time/widgets/button_1.dart';
 import 'package:doctors_time/widgets/custom_snackbar.dart';
@@ -96,7 +92,9 @@ class _OtpPageState extends State<OtpPage> {
                         onPressed: () {
                           log("optscreen${ref.otp}");
                           if (ref.otp.isNotEmpty) {
-                            verifyOtpfunc(context);
+                            controller.verifyOtp(
+                                context: context,
+                                verificationId: widget.verificationId);
                           } else {
                             customSnackBar(context, "Enter 6-Digit Code");
                           }
@@ -126,37 +124,5 @@ class _OtpPageState extends State<OtpPage> {
               ),
       ),
     );
-  }
-
-  void verifyOtpfunc(BuildContext context) {
-    final ap = Provider.of<myAuthProvider>(context, listen: false);
-    ap.verifyOtp(
-        context: context,
-        verificationId: widget.verificationId,
-        onSucess: () {
-          //checking wheather user exists in our DB
-          ap.checkExistingUser().then((value) async {
-            if (value == true) {
-              //user exists in oure app
-              final String role = await ap.getRoleFromDatabse();
-              if (role == 'patient') {
-                await ap.getUserDataFromFirestore();
-                await ap.setSignIn("patient");
-                await ap.saveUserDataToSP(Roles.patient);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, HomePage.routeName, (route) => false);
-              } else {
-                await ap.getDoctorsDataFromFirestore();
-                await ap.setSignIn("doctor");
-                await ap.saveUserDataToSP(Roles.doctor);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, DoctorHomePage.routeName, (route) => false);
-              }
-            } else {
-              //new user
-              Navigator.pushNamed(context, SignUpAs.routeName);
-            }
-          });
-        });
   }
 }

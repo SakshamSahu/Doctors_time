@@ -8,7 +8,7 @@ Widget ChatTile(BuildContext context, String name, String msg) {
     onTap: () {},
     child: Container(
       height: height * 0.088,
-      color: Colors.white,
+      color: Colors.grey.shade300,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

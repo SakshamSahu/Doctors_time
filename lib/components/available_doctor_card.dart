@@ -1,5 +1,5 @@
 import 'package:doctors_time/models/AvailableDoctor.dart';
-import 'package:doctors_time/pages/doctor_details.dart';
+import 'package:doctors_time/pages/patient/doctor_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -16,7 +16,8 @@ Widget availabledoctorcard(BuildContext context, int index) {
       width: width * 0.71,
       height: height * 0.23,
       decoration: BoxDecoration(
-          color: Colors.white60, borderRadius: BorderRadius.circular(8)),
+          color: const Color(0XFF0217A8),
+          borderRadius: BorderRadius.circular(8)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -26,11 +27,13 @@ Widget availabledoctorcard(BuildContext context, int index) {
               Text(
                 demoAvailableDoctors[index].name!,
                 style: TextStyle(
-                    fontSize: width * 0.0455, fontWeight: FontWeight.w400),
+                    fontSize: width * 0.0455,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
               ),
               Text(
                 demoAvailableDoctors[index].sector!,
-                style: TextStyle(fontSize: width * 0.034),
+                style: TextStyle(fontSize: width * 0.034, color: Colors.white),
               ),
               SizedBox(height: height * 0.004),
               RatingBar.builder(
@@ -46,23 +49,31 @@ Widget availabledoctorcard(BuildContext context, int index) {
               Text(
                 "Experience",
                 style: TextStyle(
-                    fontSize: width * 0.036, fontWeight: FontWeight.w300),
+                    fontSize: width * 0.036,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white),
               ),
               Text(
                 "${demoAvailableDoctors[index].experience} Years",
                 style: TextStyle(
-                    fontSize: width * 0.035, fontWeight: FontWeight.w400),
+                    fontSize: width * 0.035,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
               ),
               SizedBox(height: height * 0.015),
               Text(
                 "Patients",
                 style: TextStyle(
-                    fontSize: width * (0.036), fontWeight: FontWeight.w300),
+                    fontSize: width * (0.036),
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white),
               ),
               Text(
                 demoAvailableDoctors[index].patients!,
                 style: TextStyle(
-                    fontSize: width * 0.035, fontWeight: FontWeight.w400),
+                    fontSize: width * 0.035,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
               ),
             ],
           ),

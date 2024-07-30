@@ -7,12 +7,10 @@ Widget recommendeddoctorcard(BuildContext context, int index) {
   return Container(
     padding: EdgeInsets.symmetric(
         vertical: height * 0.015, horizontal: width * 0.035),
-    width: width * 0.71,
-    height: height * 0.23,
     decoration: BoxDecoration(
-        color: Colors.white60, borderRadius: BorderRadius.circular(8)),
+        color: const Color(0XFF0217A8), borderRadius: BorderRadius.circular(8)),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,32 +18,29 @@ Widget recommendeddoctorcard(BuildContext context, int index) {
             Text(
               demo_recommended_doctor[index].name,
               style: TextStyle(
-                  fontSize: width * 0.0455, fontWeight: FontWeight.w400),
+                fontSize: width * 0.0455,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
             ),
             Text(
               demo_recommended_doctor[index].speciality,
-              style: TextStyle(fontSize: width * 0.034),
+              style: TextStyle(fontSize: width * 0.034, color: Colors.white),
             ),
             SizedBox(height: height * 0.075),
-            // RatingBar.builder(
-            //     initialRating: 5,
-            //     itemSize: 13,
-            //     direction: Axis.horizontal,
-            //     itemBuilder: ((context, index) => const Icon(
-            //           Icons.star,
-            //           color: Colors.amber,
-            //         )),
-            //     onRatingUpdate: (rating) {}),
-            // SizedBox(height: height * 0.015),
             Text(
               "Institute",
               style: TextStyle(
-                  fontSize: width * 0.036, fontWeight: FontWeight.w300),
+                  fontSize: width * 0.036,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white),
             ),
             Text(
               demo_recommended_doctor[index].institute,
               style: TextStyle(
-                  fontSize: width * 0.035, fontWeight: FontWeight.w400),
+                  fontSize: width * 0.035,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white),
             ),
             SizedBox(height: height * 0.015),
           ],

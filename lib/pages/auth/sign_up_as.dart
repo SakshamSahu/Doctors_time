@@ -1,5 +1,5 @@
-import 'package:doctors_time/pages/sign_up_page_patient.dart';
-import 'package:doctors_time/pages/sign_up_page_doctor.dart';
+import 'package:doctors_time/pages/auth/sign_up_page_patient.dart';
+import 'package:doctors_time/pages/auth/sign_up_page_doctor.dart';
 import 'package:doctors_time/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 

@@ -14,13 +14,6 @@ final popularCourses = [
   "Dental Surgeon",
   "Opthalmologists"
 ];
-final trenFreeCourses = [
-  "Group Dance",
-  "Piano",
-  "Guitar",
-  "Acting",
-  "Stand -Up"
-];
 
 Widget buildImage(BuildContext context, String urlImage, int index) {
   double height = MediaQuery.of(context).size.height;
@@ -46,7 +39,7 @@ Widget buildImage(BuildContext context, String urlImage, int index) {
               width: double.infinity,
               height: height * 0.04,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.8),
+                color: const Color(0XFF0217A8).withOpacity(0.8),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(

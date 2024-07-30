@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:country_picker/country_picker.dart';
 import 'package:doctors_time/components/pick_image.dart';
 import 'package:doctors_time/constants.dart';
 import 'package:doctors_time/models/UserModel.dart';
-import 'package:doctors_time/pages/sign_in_page.dart';
+import 'package:doctors_time/pages/auth/sign_in_page.dart';
 import 'package:doctors_time/provider/my_auth_provider.dart';
 import 'package:doctors_time/widgets/bottom_navigation_bar.dart';
 import 'package:doctors_time/widgets/button_1.dart';
@@ -22,23 +21,10 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  Country selectedCountry = Country(
-    phoneCode: "91",
-    countryCode: "IN",
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: "India",
-    example: "India",
-    displayName: "India",
-    displayNameNoCountryCode: "IN",
-    e164Key: "",
-  );
-
   File? image;
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -50,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
     super.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
-    phoneController.dispose();
+
     addressController.dispose();
     emailController.dispose();
     ageController.dispose();
@@ -139,6 +125,10 @@ class _SignupPageState extends State<SignupPage> {
                       customTextFormField(
                           context, "Last name*", lastNameController),
                       SizedBox(height: height * 0.03),
+                      customTextFormField(context, "Gender*", genderController),
+                      SizedBox(height: height * 0.03),
+                      customTextFormField(context, "Age", ageController),
+                      SizedBox(height: height * 0.03),
                       customTextFormField(
                           context, "Address*", addressController),
                       SizedBox(height: height * 0.03),
@@ -147,45 +137,8 @@ class _SignupPageState extends State<SignupPage> {
                       customTextFormField(
                           context, "Pincode*", pincodeController),
                       SizedBox(height: height * 0.03),
-                      customTextFormField(context, "Age", ageController),
-                      SizedBox(height: height * 0.03),
                       customTextFormField(context, "Email*", emailController),
                       SizedBox(height: height * 0.03),
-                      TextFormField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: "Enter phone number",
-                          prefixIcon: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                showCountryPicker(
-                                    context: context,
-                                    countryListTheme:
-                                        const CountryListThemeData(
-                                      bottomSheetHeight: 550,
-                                    ),
-                                    onSelect: (value) {
-                                      setState(() {
-                                        selectedCountry = value;
-                                      });
-                                    });
-                              },
-                              child: Text(
-                                "${selectedCountry.flagEmoji} + ${selectedCountry.phoneCode}",
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: height * 0.035),
                       Center(
                         child: SizedBox(
                           width: width,
@@ -214,7 +167,8 @@ class _SignupPageState extends State<SignupPage> {
       age: ageController.text.trim(),
       address: addressController.text.trim(),
       email: emailController.text.trim(),
-      phonenumber: phoneController.text.trim(),
+      gender: genderController.text.trim(),
+      phonenumber: "",
       uid: "",
       createdAt: "",
       profilePic: "",
@@ -222,7 +176,16 @@ class _SignupPageState extends State<SignupPage> {
       city: cityController.text.trim(),
       pincode: pincodeController.text.trim(),
     );
-    if (image != null) {
+    if (firstNameController.text.isEmpty ||
+        lastNameController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        addressController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        genderController.text.isEmpty ||
+        cityController.text.isEmpty ||
+        pincodeController.text.isEmpty) {
+      customSnackBar(context, "Please fill in all fields");
+    } else if (image != null) {
       ap.saveUserDataToFirebase(
           context: context,
           userModel: userModel,
